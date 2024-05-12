@@ -85,8 +85,3 @@ predicted_gesture = gestures[predicted_gesture_index]
 
 print("Predicted Gesture:", predicted_gesture)
 print("Actual Gesture: right")
-
-
-def model():
-    loaded_rf_model = joblib.load("random_forest_model.joblib")
-    return loaded_rf_model
