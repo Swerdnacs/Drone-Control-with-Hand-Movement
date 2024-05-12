@@ -71,7 +71,7 @@ print("Accuracy:", accuracy)
 joblib.dump(rf_classifier, 'trained_model.joblib')
 
 # Read features from a new right gesture data set
-file_path = "prediction_data/pred_left.txt" 
+file_path = "prediction_data/pred_right.txt" 
 pred_features = extract_features(file_path)
 
 # Convert the features to a numpy array
