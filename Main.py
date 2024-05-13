@@ -7,13 +7,39 @@ import pandas as pd
 from scipy.stats import skew, kurtosis
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-
-tello = Tello()
+# Function to extract features from accelerometer and gyroscope data
+def extract_features(file_path):
+    # Load data from file
+    data = pd.read_csv(file_path)
+    
+    # columns are labeled 'acce_x', 'acce_y', 'acce_z', 'gyro_x', 'gyro_y', 'gyro_z'
+    accelerometer_data = data[['acce_x', 'acce_y', 'acce_z']]
+    gyroscope_data = data[['gyro_x', 'gyro_y', 'gyro_z']]
+    
+    # Initialize list to store features
+    features = []
+    
+    # Extract statistical features for accelerometer data
+    for axis in accelerometer_data.columns:
+        features.append(np.mean(accelerometer_data[axis]))
+        features.append(np.std(accelerometer_data[axis]))
+        features.append(skew(accelerometer_data[axis]))
+        features.append(kurtosis(accelerometer_data[axis]))
+    
+    # Extract statistical features for gyroscope data
+    for axis in gyroscope_data.columns:
+        features.append(np.mean(gyroscope_data[axis]))
+        features.append(np.std(gyroscope_data[axis]))
+        features.append(skew(gyroscope_data[axis]))
+        features.append(kurtosis(gyroscope_data[axis]))
+    
+    return features
+""" tello = Tello()
 tello.connect()
 
 tello.streamon()
 print(tello.get_battery())
-tello.takeoff()
+tello.takeoff() """
 
 dev = serial.Serial('COM12', timeout=0)
 w=0
@@ -31,33 +57,6 @@ while w <5:
     fp.close()
     print("stop")
     #Model
-    # Function to extract features from accelerometer and gyroscope data
-    def extract_features(file_path):
-        # Load data from file
-        data = pd.read_csv(file_path)
-        
-        # columns are labeled 'acce_x', 'acce_y', 'acce_z', 'gyro_x', 'gyro_y', 'gyro_z'
-        accelerometer_data = data[['acce_x', 'acce_y', 'acce_z']]
-        gyroscope_data = data[['gyro_x', 'gyro_y', 'gyro_z']]
-        
-        # Initialize list to store features
-        features = []
-        
-        # Extract statistical features for accelerometer data
-        for axis in accelerometer_data.columns:
-            features.append(np.mean(accelerometer_data[axis]))
-            features.append(np.std(accelerometer_data[axis]))
-            features.append(skew(accelerometer_data[axis]))
-            features.append(kurtosis(accelerometer_data[axis]))
-        
-        # Extract statistical features for gyroscope data
-        for axis in gyroscope_data.columns:
-            features.append(np.mean(gyroscope_data[axis]))
-            features.append(np.std(gyroscope_data[axis]))
-            features.append(skew(gyroscope_data[axis]))
-            features.append(kurtosis(gyroscope_data[axis]))
-        
-        return features
 
     # List to store features for all files
     all_features = []
@@ -111,7 +110,7 @@ while w <5:
     print("Actual Gesture: right")
 
     #Drone
-    match predicted_gesture:
+    """ match predicted_gesture:
         case 'down':
             tello.move_down(30)
         case 'up':
@@ -120,5 +119,5 @@ while w <5:
             tello.move_right(40)
         case 'left':
             tello.move_left(40) 
-    w+=1
-tello.land()
+    w+=1 """
+#tello.land()
