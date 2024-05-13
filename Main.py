@@ -34,6 +34,7 @@ def extract_features(file_path):
         features.append(kurtosis(gyroscope_data[axis]))
     
     return features
+
 """ tello = Tello()
 tello.connect()
 
@@ -107,7 +108,6 @@ while w <5:
     predicted_gesture = gestures[predicted_gesture_index]
 
     print("Predicted Gesture:", predicted_gesture)
-    print("Actual Gesture: right")
 
     #Drone
     """ match predicted_gesture:
