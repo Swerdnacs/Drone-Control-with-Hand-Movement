@@ -39,22 +39,22 @@ def extract_features(file_path):
     return features
 
 
-# tello = Tello()
-# tello.connect()
+tello = Tello()
+tello.connect()
 
-# tello.streamon()
-# print(tello.get_battery())
-# tello.takeoff() 
+tello.streamon()
+print(tello.get_battery())
+tello.takeoff() 
 
-dev = serial.Serial('COM14', timeout=0)
+dev = serial.Serial('COM12', timeout=0)
 w=0
-while w <5:
+while w <7:
     fp=open("./data.txt", 'w')
     fp.write("acce_x,acce_y,acce_z,gyro_x,gyro_y,gyro_z\n")
     i=0
     print("start")
-    while i < 200:
-        time.sleep(1/200)
+    while i < 300:
+        time.sleep(1/201)
         tmp = dev.readline()
         if(tmp!=b''):
             fp.write(tmp[:-1].decode())
@@ -62,9 +62,6 @@ while w <5:
     fp.close()
     print("stop")
     #Model
-
-    # Save the trained model to a file
-
     # Read features from a new right gesture data set
     file_path = "data.txt" 
     pred_features = extract_features(file_path)
@@ -83,14 +80,16 @@ while w <5:
     print("Predicted Gesture:", predicted_gesture)
 
     #Drone
-    """ match predicted_gesture:
+    match predicted_gesture:
         case 'down':
-            tello.move_down(30)
+            tello.move_left(30)
         case 'up':
-            tello.move_up(30)
+            tello.move_right(30)
         case 'right':
             tello.move_right(40)
         case 'left':
-            tello.move_left(40) 
-    w+=1 """
-#tello.land()
+            tello.move_left(40)
+    
+    w+=1
+    time.sleep(1)
+tello.land()
