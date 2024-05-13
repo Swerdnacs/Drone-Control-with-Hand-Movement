@@ -6,7 +6,6 @@ tello.connect()
 
 tello.streamon()
 print(tello.get_battery())
-tello.turn_motor_on()
 tello.takeoff()
 
 while True:
