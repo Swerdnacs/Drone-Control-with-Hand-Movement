@@ -82,9 +82,9 @@ while w <7:
     #Drone
     match predicted_gesture:
         case 'down':
-            tello.move_left(30)
+            tello.move_down(30)
         case 'up':
-            tello.move_right(30)
+            tello.move_up(30)
         case 'right':
             tello.move_right(40)
         case 'left':
